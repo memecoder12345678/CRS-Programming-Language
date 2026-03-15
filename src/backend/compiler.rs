@@ -71,7 +71,6 @@ pub struct Compiler<'a> {
     local_count: usize,
     max_registers: usize,
     loop_ctx: Vec<(Vec<usize>, Vec<usize>)>,
-    consts: HashMap<String, Value>,
 }
 
 impl<'a> Compiler<'a> {
@@ -84,7 +83,6 @@ impl<'a> Compiler<'a> {
             local_count: 0,
             max_registers: 0,
             loop_ctx: Vec::new(),
-            consts: HashMap::new(),
         }
     }
 
@@ -183,33 +181,9 @@ impl<'a> Compiler<'a> {
         self.local_count = saved_local_count;
     }
 
-    fn try_eval_const_recursive(&self, expr: &Expr) -> Option<Value> {
-        match expr {
-            Expr::Ident(n) => self.consts.get(n).cloned(),
-            Expr::Binary(l, op, r) => {
-                let left = self.try_eval_const_recursive(l)?;
-                let right = self.try_eval_const_recursive(r)?;
-                fold_binary(&left, op, &right)
-            }
-            Expr::Unary(op, r) => {
-                let val = self.try_eval_const_recursive(r)?;
-                match (op, val) {
-                    (Token::Not, Value::Bool(b)) => Some(Value::Bool(!b)),
-                    (Token::Minus, Value::Int(i)) => Some(Value::Int(-i)),
-                    (Token::Minus, Value::Float(f)) => Some(Value::Float(-f)),
-                    _ => None,
-                }
-            }
-            _ => self.try_eval_const(expr),
-        }
-    }
-
     fn compile_expr(&mut self, expr: Expr, dst: usize) -> usize {
         if dst + 1 > self.max_registers {
             self.max_registers = dst + 1;
-        }
-        if let Some(val) = self.try_eval_const_recursive(&expr) {
-            return self.compile_expr(self.value_to_expr(val), dst);
         }
         match expr {
             Expr::Null => {
@@ -239,10 +213,6 @@ impl<'a> Compiler<'a> {
                 dst
             }
             Expr::Ident(n) => {
-                if let Some(val) = self.consts.get(&n) {
-                    return self.compile_expr(self.value_to_expr(val.clone()), dst);
-                }
-
                 if let Some(&func_id) = self.prog.func_map.get(&n) {
                     self.code.push(Instruction::LoadFunction { dst, func_id });
                     dst
@@ -799,16 +769,6 @@ impl<'a> Compiler<'a> {
                 self.code.push(Instruction::Throw { src: r_reg });
             }
             Stmt::Include(_) => {}
-            Stmt::Const(n, e) => {
-                if let Some(val) = self.try_eval_const(&e) {
-                    self.consts.insert(n, val);
-                } else {
-                    panic!(
-                        "CompilationError: Const '{}' must be a compile-time constant.",
-                        n
-                    );
-                }
-            }
         }
     }
 }

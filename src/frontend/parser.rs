@@ -27,7 +27,6 @@ pub enum Expr {
 #[derive(Debug)]
 pub enum Stmt {
     Let(String, Expr),
-    Const(String, Expr),
     If(Expr, Vec<Stmt>, Option<Vec<Stmt>>),
     While(Expr, Vec<Stmt>),
     For(Box<Stmt>, Expr, Expr, Vec<Stmt>),
@@ -266,14 +265,6 @@ impl Parser {
                 let v = self.parse_expr();
                 self.eat(Token::Semicolon);
                 Stmt::Return(v)
-            }
-            Token::Const => {
-                self.eat(Token::Const);
-                let n = self.parse_ident();
-                self.eat(Token::Assign);
-                let v = self.parse_expr();
-                self.eat(Token::Semicolon);
-                Stmt::Const(n, v)
             }
             _ => {
                 let e = self.parse_expr();

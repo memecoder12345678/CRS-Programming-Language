@@ -2,7 +2,6 @@
 pub enum Token {
     Func,
     Let,
-    Const,
     If,
     Else,
     Return,
@@ -207,7 +206,6 @@ impl Lexer {
                     "catch" => Token::Catch,
                     "throw" => Token::Throw,
                     "include" => Token::Include,
-                    "const" => Token::Const,
                     _ => Token::Ident(s),
                 }
             } else {
