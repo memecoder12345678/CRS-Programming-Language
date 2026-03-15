@@ -115,17 +115,6 @@ jobs:
           gh release create "$VERSION_TAG" \
               --repo="$GITHUB_REPOSITORY" \
               --title="CRS Build $VERSION_TAG" \
-              --notes "### CRS Runtime Details
-              
-              This release contains the latest standalone binaries for the CRS Programming Language.
-              
-              - **Version Build:** $VERSION_TAG
-              - **Timestamp:** $BUILD_DATE
-              
-              **Usage:**
-              Download the binary for your platform and execute:
-              \`\`\`bash
-              crs run <file.crs> [entry]
-              \`\`\`" \
+              --notes "CRS Language Standalone Build $VERSION_TAG ($BUILD_DATE)." \
               $PRERELEASE_FLAG \
               bin/crs-*
