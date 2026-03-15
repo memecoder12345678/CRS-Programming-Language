@@ -235,10 +235,6 @@ The compiler handles:
 * circular dependency checks
 
 ---
-Ok Coder 😎
-Tôi sẽ viết lại **Standard Library documentation đầy đủ** cho ngôn ngữ của bạn (CRS) dựa trên đoạn Rust bạn gửi. Tôi giữ style giống tài liệu chính thức để bạn có thể **paste thẳng vào README.md** trên GitHub.
-
----
 
 ## CRS Standard Library
 
@@ -254,7 +250,7 @@ These functions provide utilities for **I/O, strings, arrays, tables, system acc
 Manually triggers the garbage collector.
 
 ```js
-gc_collect()
+gc_collect();
 ```
 
 Returns:
@@ -272,7 +268,7 @@ null
 Terminates the program with the given exit code.
 
 ```js
-quit(0)
+quit(0);
 ```
 
 Parameters:
@@ -290,8 +286,8 @@ Parameters:
 Prints values without newline.
 
 ```js
-print("Hello")
-print("A", "B", 123)
+print("Hello");
+print("A", "B", 123);
 ```
 
 ---
@@ -301,8 +297,8 @@ print("A", "B", 123)
 Prints values with a newline.
 
 ```js
-println("Hello World")
-println("A", "B", 123)
+println("Hello World");
+println("A", "B", 123);
 ```
 
 ---
@@ -312,7 +308,7 @@ println("A", "B", 123)
 Reads a line from standard input.
 
 ```js
-name = input("Enter name: ")
+name = input("Enter name: ");
 ```
 
 Returns:
@@ -330,7 +326,7 @@ String
 Reads a file into a string.
 
 ```js
-content = read("file.txt")
+content = read("file.txt");
 ```
 
 Returns:
@@ -348,7 +344,7 @@ Error if file cannot be read.
 Writes content to a file.
 
 ```js
-write("hello.txt", "Hello World")
+write("hello.txt", "Hello World");
 ```
 
 ---
@@ -358,7 +354,7 @@ write("hello.txt", "Hello World")
 Checks if a file exists.
 
 ```js
-is_file_exists("data.txt")
+is_file_exists("data.txt");
 ```
 
 Returns:
@@ -376,7 +372,7 @@ Bool
 Gets an environment variable.
 
 ```js
-path = get_env("PATH")
+path = get_env("PATH");
 ```
 
 Returns:
@@ -392,7 +388,7 @@ String | null
 Sets an environment variable.
 
 ```js
-set_env("DEBUG", "1")
+set_env("DEBUG", "1");
 ```
 
 ---
@@ -402,7 +398,7 @@ set_env("DEBUG", "1")
 Returns current working directory.
 
 ```js
-dir = get_dir()
+dir = get_dir();
 ```
 
 Returns:
@@ -418,7 +414,7 @@ String
 Changes working directory.
 
 ```js
-change_dir("C:/projects")
+change_dir("C:/projects");
 ```
 
 ---
@@ -428,7 +424,7 @@ change_dir("C:/projects")
 Executes a system command and returns stdout.
 
 ```js
-result = sys("ls")
+result = sys("ls");
 ```
 
 On Windows it uses:
@@ -456,7 +452,7 @@ String
 Returns true if running on Windows.
 
 ```js
-is_windows_os()
+is_windows_os();
 ```
 
 Returns:
@@ -474,7 +470,7 @@ Bool
 Replaces occurrences of a substring.
 
 ```js
-replace("hello world", "world", "CRS")
+replace("hello world", "world", "CRS");
 ```
 
 Result:
@@ -490,7 +486,7 @@ Result:
 Splits a string into an array.
 
 ```js
-split("a,b,c", ",")
+split("a,b,c", ",");
 ```
 
 Result:
@@ -506,7 +502,7 @@ Result:
 Slices strings or arrays.
 
 ```js
-slice("hello", 1, 4)
+slice("hello", 1, 4);
 ```
 
 Result:
@@ -524,7 +520,7 @@ Also works with arrays.
 Removes leading and trailing whitespace.
 
 ```js
-strip("   hello  ")
+strip("   hello  ");
 ```
 
 Result:
@@ -542,7 +538,7 @@ Result:
 Appends value to array.
 
 ```js
-push(arr, 10)
+push(arr, 10);
 ```
 
 ---
@@ -552,7 +548,7 @@ push(arr, 10)
 Removes and returns the last element.
 
 ```js
-value = pop(arr)
+value = pop(arr);
 ```
 
 ---
@@ -562,7 +558,7 @@ value = pop(arr)
 Appends all elements from array2 to array1.
 
 ```js
-extend(a, b)
+extend(a, b);
 ```
 
 ---
@@ -572,7 +568,7 @@ extend(a, b)
 Inserts value at index.
 
 ```js
-insert(arr, 2, 99)
+insert(arr, 2, 99);
 ```
 
 ---
@@ -586,8 +582,8 @@ Returns length of:
 * String
 
 ```js
-len(arr)
-len("hello")
+len(arr);
+len("hello");
 ```
 
 ---
@@ -599,7 +595,7 @@ len("hello")
 Returns all keys.
 
 ```js
-keys(t)
+keys(t);
 ```
 
 ---
@@ -609,7 +605,7 @@ keys(t)
 Returns all values.
 
 ```js
-values(t)
+values(t);
 ```
 
 ---
@@ -619,9 +615,9 @@ values(t)
 Gets a value from array or table.
 
 ```js
-get(arr, 1)
-get(table, :name)
-get(arr, 10, "default")
+get(arr, 1);
+get(table, :name);
+get(arr, 10, "default");
 ```
 
 ---
@@ -631,8 +627,8 @@ get(arr, 10, "default")
 Sets a value.
 
 ```js
-set(arr, 1, 100)
-set(table, :name, "CRS")
+set(arr, 1, 100);
+set(table, :name, "CRS");
 ```
 
 ---
@@ -644,7 +640,7 @@ set(table, :name, "CRS")
 Seeds the random generator.
 
 ```js
-rand_seed(123)
+rand_seed(123);
 ```
 
 ---
@@ -658,7 +654,7 @@ Returns random float in range:
 ```
 
 ```js
-rand()
+rand();
 ```
 
 ---
@@ -668,7 +664,7 @@ rand()
 Returns random integer between `a` and `b`.
 
 ```js
-rand_int(1, 10)
+rand_int(1, 10);
 ```
 
 ---
@@ -678,7 +674,7 @@ rand_int(1, 10)
 Returns random element from array.
 
 ```js
-rand_choice(arr)
+rand_choice(arr);
 ```
 
 ---
@@ -690,8 +686,8 @@ rand_choice(arr)
 Converts to integer.
 
 ```js
-to_int("123")
-to_int(12.5)
+to_int("123");
+to_int(12.5);
 ```
 
 ---
@@ -701,7 +697,7 @@ to_int(12.5)
 Converts to float.
 
 ```js
-to_float("3.14")
+to_float("3.14");
 ```
 
 ---
@@ -728,7 +724,7 @@ Rules:
 Converts value to string.
 
 ```js
-to_string(123)
+to_string(123);
 ```
 
 ---
@@ -738,7 +734,7 @@ to_string(123)
 Returns value type.
 
 ```js
-type_of(123)
+type_of(123);
 ```
 
 Example result:
@@ -758,13 +754,13 @@ Example result:
 Returns current time since Unix epoch.
 
 ```js
-get_now()
+get_now();
 ```
 
 Returns:
 
 ```
-Float (seconds)
+Float (seconds);
 ```
 
 ---
@@ -830,7 +826,7 @@ The project contains a **comprehensive test suite** that validates language feat
 * garbage collection
 * performance
 
-Running the test suite executes **25+ feature tests** covering the full runtime behavior.
+Running the test suite executes **25 feature tests** covering the full runtime behavior.
 
 ---
 
