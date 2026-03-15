@@ -1,0 +1,19 @@
+func deposit(state, amount) {
+    state.balance = state.balance + amount;
+    return state.balance;
+}
+
+func withdraw(state, amount) {
+    if (amount > state.balance) {
+        throw "Insufficient funds";
+    }
+    state.balance = state.balance - amount;
+    return state.balance;
+}
+
+func consts_bank() {
+    return {
+        balance: 0,
+        owner: "Guest"
+    };
+}

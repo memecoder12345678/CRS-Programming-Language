@@ -1,0 +1,658 @@
+// ========================================
+// COMPREHENSIVE TEST SUITE FOR CRS
+// ========================================
+
+// Helper functions for test functions
+
+func add(a, b) {
+    return a + b;
+}
+
+func greet(name) {
+    println("Hello,", name);
+    return "Greeted";
+}
+
+func fibonacci(n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+func increment(vals) {
+    vals.value += 1;
+}
+
+func getValue(vals) {
+    return vals.value;
+}
+
+// TEST 1: Basic Printing
+func test_printing() {
+    println("=== TEST 1: Basic Printing ===");
+    println("Hello, World!");
+    println("Number:", 42);
+    println("Float:", 3.14);
+    println("Bool:", true);
+    println("Done");
+}
+
+// TEST 2: Variables and Basic Types
+func test_variables() {
+    println("=== TEST 2: Variables and Types ===");
+    
+    let x = 10;
+    println("Integer:", x);
+    
+    let y = 3.14;
+    println("Float:", y);
+    
+    let b = true;
+    println("Bool:", b);
+    
+    let s = "Hello";
+    println("String:", s);
+    
+    let n = null;
+    println("Null:", n);
+}
+
+// TEST 3: Arithmetic Operations
+func test_arithmetic() {
+    println("=== TEST 3: Arithmetic Operations ===");
+    
+    println("Add:", 5 + 3);
+    println("Sub:", 5 - 3);
+    println("Mul:", 5 * 3);
+    println("Div:", 10.0 / 3);
+    println("Mod:", 10 / 3);
+    println("Neg:", -5);
+}
+
+// TEST 4: Comparison Operations
+func test_comparison() {
+    println("=== TEST 4: Comparison Operations ===");
+    
+    println("5 == 5:", 5 == 5);
+    println("5 != 3:", 5 != 3);
+    println("5 > 3:", 5 > 3);
+    println("5 < 3:", 5 < 3);
+    println("5 >= 5:", 5 >= 5);
+    println("5 <= 3:", 5 <= 3);
+}
+
+// TEST 5: Logical Operations
+func test_logical() {
+    println("=== TEST 5: Logical Operations ===");
+    
+    println("true and true:", true and true);
+    println("true and false:", true and false);
+    println("true or false:", true or false);
+    println("false or false:", false or false);
+    println("not true:", not true);
+    println("not false:", not false);
+}
+
+// TEST 6: If-Else Statements
+func test_if_else() {
+    println("=== TEST 6: If-Else Statements ===");
+    
+    let x = 10;
+    if (x > 5) {
+        println("x > 5");
+    } else {
+        println("x <= 5");
+    }
+    
+    if (x == 10) {
+        println("x equals 10");
+    } else if (x > 10) {
+        println("x > 10");
+    } else {
+        println("x < 10");
+    }
+}
+
+// TEST 7: While Loop
+func test_while_loop() {
+    println("=== TEST 7: While Loop ===");
+    
+    let i = 0;
+    while (i < 3) {
+        println("Loop iteration:", i);
+        i = i + 1;
+    }
+}
+
+// TEST 8: For Loop
+func test_for_loop() {
+    println("=== TEST 8: For Loop ===");
+    
+    for (let i = 0; i < 3; i = i + 1) {
+        println("For loop i:", i);
+    }
+}
+
+// TEST 9: Arrays
+func test_arrays() {
+    println("=== TEST 9: Arrays ===");
+    
+    let arr = [1, 2, 3, 4, 5];
+    println("Array:", arr);
+    println("Access arr[0]:", arr[0]);
+    println("Access arr[2]:", arr[2]);
+    
+    arr[1] = 20;
+    println("After arr[1] = 20:", arr[1]);
+    
+    push(arr, 6);
+    println("After push(6), length:", len(arr));
+}
+
+// TEST 10: Tables
+func test_tables() {
+    println("=== TEST 10: Tables ===");
+    
+    let obj = {
+        name: "Test",
+        age: 25,
+        city: "NYC"
+    };
+    
+    println("Table:", obj);
+    println("obj.name:", obj.name);
+    println("obj.age:", obj.age);
+    
+    obj.age = 26;
+    println("After obj.age = 26:", obj.age);
+}
+
+// TEST 11: Functions
+func test_functions() {
+    println("=== TEST 11: Functions ===");
+    
+    let result = add(10, 20);
+    println("add(10, 20) =", result);
+    
+    let msg = greet("Alice");
+    println("greet returned:", msg);
+}
+
+// TEST 12: Recursion
+func test_recursion() {
+    println("=== TEST 12: Recursion ===");
+    
+    println("fibonacci(10) =", fibonacci(10));
+}
+
+// TEST 13: String Operations
+func test_strings() {
+    println("=== TEST 13: String Operations ===");
+    
+    let s1 = "Hello";
+    let s2 = "World";
+    println("Concat:", s1 + " " + s2);
+    println("String length:", len(s1));
+    
+    let s3 = "uppercase";
+    println("Original:", s3);
+    println("String ops work");
+}
+
+// TEST 14: Try-Catch Error Handling
+func test_try_catch() {
+    println("=== TEST 14: Try-Catch Error Handling ===");
+    
+    try {
+        throw "CustomError";
+    } catch ("CustomError", err) {
+        println("Caught error:", err);
+    }
+    
+    try {
+        println("No error here");
+    } catch (err) {
+        println("This should not print");
+    }
+}
+
+// TEST 15: Multiple Variables Assignment
+func test_multiple_vars() {
+    println("=== TEST 15: Multiple Variables ===");
+    
+    let a = 1;
+    let b = 2;
+    let c = 3;
+    println("a=", a, " b=", b, " c=", c);
+    
+    a = 10;
+    b = 20;
+    c = 30;
+    println("After update: a=", a, " b=", b, " c=", c);
+}
+
+// TEST 16: Complex Expressions
+func test_complex_expr() {
+    println("=== TEST 16: Complex Expressions ===");
+    
+    let result = (5 + 3) * 2 - 4 / 2;
+    println("(5 + 3) * 2 - 4 / 2 =", result);
+    
+    let bool_result = (5 > 3) and (10 < 20) or (false);
+    println("(5 > 3) and (10 < 20) or false =", bool_result);
+}
+
+// TEST 17: Type Checking
+func test_type_checking() {
+    println("=== TEST 17: Type Checking ===");
+    
+    let vals = [5, 3.14, true, "text", null];
+    println("Array with mixed types created");
+    println("vals[0] =", vals[0]);
+    println("vals[1] =", vals[1]);
+    println("vals[2] =", vals[2]);
+    println("vals[3] =", vals[3]);
+    println("vals[4] =", vals[4]);
+}
+
+// TEST 18: Nested Structures
+func test_nested() {
+    println("=== TEST 18: Nested Structures ===");
+    
+    let nested = {
+        users: [
+            {name: "Alice", age: 25},
+            {name: "Bob", age: 30}
+        ],
+        count: 2
+    };
+    
+    println("Nested structure created");
+    println("First user:", nested.users[0].name);
+    println("Count:", nested.count);
+}
+
+// TEST 19: Error Conditions
+func test_error_conditions() {
+    println("=== TEST 19: Error Conditions ===");
+    
+    try {
+        throw "DivisionError";
+    } catch ("DivisionError", e) {
+        println("Caught:", e);
+    }
+    
+    try {
+        throw "IndexError";
+    } catch ("IndexError", e) {
+        println("Caught:", e);
+    }
+}
+
+// TEST 20: Break and Continue
+func test_break_continue() {
+    println("=== TEST 20: Break and Continue ===");
+    
+    for (let i = 0; i < 5; i = i + 1) {
+        if (i == 2) {
+            continue;
+        }
+        if (i == 4) {
+            break;
+        }
+        println("Loop i:", i);
+    }
+    println("Break/Continue test done");
+}
+
+// TEST 21: Complex Assignments (+=, -=, *=, /=)
+func test_complex_assignment() {
+    println("=== TEST 21: Complex Assignments (+=, -=, *=, /=) ===");
+
+    let x = 10;
+    x += 5;
+    x *= 2;
+    println("x (should be 30):", x);
+
+    let msg = "Hello";
+    msg += " World";
+    msg += "!";
+    println("msg (should be Hello World!):", msg);
+
+    let arr = [10, 20, 30];
+    arr[0] += 5;
+    arr[1] *= 3;
+    arr[2] /= 2;
+    println("arr (should be [15, 60, 15]):", arr);
+
+    let player = {
+        name: "Hero",
+        hp: 100,
+        gold: 50
+    };
+    player.hp -= 25;
+    player.gold += 150;
+    println("player.hp (should be 75):", player.hp);
+    println("player.gold (should be 200):", player.gold);
+
+    let game = {
+        users: [
+            { id: 1, score: 10 }
+        ]
+    };
+    game.users[0].score += 90; 
+    
+    println("nested score (should be 100):", game.users[0].score);
+    println("Done TEST 21");
+}
+
+// TEST 22: GC and Memory Management
+func test_gc() {
+    println("=== TEST 22: GC and Memory Management ===");
+    
+    let a = [];
+    let b = {};
+    b.ref = a;
+    push(a, b);
+    println("Created circular reference");
+
+    gc_collect();
+    println("Garbage collection triggered");
+}
+
+// TEST 23: Performance Test (Optional, can be commented out if not needed)
+func test_performance() {
+    println("=== TEST 23: Performance Test ===");
+    
+    let start = get_now();
+    let sum = 0;
+    for (let i = 0; i < 10000001; i = i + 1) {
+        sum += i;
+    }
+    let end = get_now();
+    println("Sum:", sum);
+    println("Time taken (ms):", (end - start) * 1000);
+}
+
+// TEST 24: Include and Module System
+
+include "bank.crs";
+
+func test_include_1() {
+    println("=== TEST 24.1: Include and Module System ===");
+    
+    let my_bank = consts_bank();
+    
+    println("--- Bank System Initialized ---");
+    
+    deposit(my_bank, 1000);
+    println("Balance after deposit: ", my_bank.balance);
+
+    try {
+        withdraw(my_bank, 1500);
+    } catch (err) {
+        println("Caught expected error:", err);
+    }
+    
+    withdraw(my_bank, 200);
+    println("Final balance: ", my_bank.balance);
+}
+
+include "math.crs";
+
+func test_include_2() {
+    println("=== TEST 24.2: Include and Module System ===");
+    
+    let math = consts_math();
+    let sum = add(math.pi, math.e);
+    let diff = sub(math.pi, math.e);
+    println("Sum: " + sum);
+    println("Difference: " + diff);
+}
+
+// TEST 25: Functions inside Tables
+func test_functions_in_tables() {
+    println("=== TEST 25: Functions inside Tables ===");
+    
+    let obj = {
+        value: 10,
+        increment_func: increment, 
+        getValue_func: getValue,
+    };
+    
+    /*
+        NOTE: ++ / --, member access, and function-call semantics in CRS
+
+        Summary
+        -------
+        - The increment (++) and decrement (--) operators in CRS are only valid 
+        for simple variables (identifiers that are direct bindings in the 
+        current scope). They are NOT available for member accesses or indexed 
+        expressions (table fields, array elements, etc).
+            // valid
+            let i = 0;
+            i++;
+
+            // invalid / not part of the grammar
+            vals.v++
+            arr[0]++
+
+        - Table fields and array elements are treated as SYMBOL lookups (keys
+        into a table/hashmap), not as variables (scope bindings). They are
+        access paths, not L-values in the grammar. Because of that, syntax
+        like `vals.v++` is rejected by the parser (the parser only accepts
+        `IDENT "++"`, not `expression "++"`).
+
+        Why this restriction?
+        --------------------
+        - Simpler semantics: A variable (identifier) maps directly to a storage
+        slot/binding in the environment. An expression like `vals.v` is a
+        lookup chain (resolve `vals`, then key "v"). Allowing `++` on every
+        expression would require the VM/compiler to implement complex
+        lvalue resolution and write-back code paths for many kinds of chains
+        (property, index, nested chains), increasing bytecode/opcode surface
+        and optimizer complexity.
+
+        - Clearer guarantees: By restricting ++/-- to variables, you get very
+        predictable bytecode (e.g. INC_LOCAL) and fewer special cases in
+        the runtime (no INC_PROPERTY/INC_INDEX opcodes required).
+
+        Compound assignment and desugaring
+        ---------------------------------
+        - For member/index updates use compound assignment (+=, -=, etc). Those
+        are supported and desugared by the compiler:
+            vals.v += 1
+        is transformed into
+            vals.v = vals.v + 1
+        at compile time (i.e. the compiler emits an assign with a rhs that
+        reads the member and adds 1). This keeps grammar simple while
+        allowing concise updates.
+
+        Function calls and table fields
+        ------------------------------
+        - Calling a function stored in a table field has the same distinction:
+            // not allowed (syntax-level)
+            obj.fn()
+
+        Because `obj.fn()` would require the parser/compiler/runtime to treat
+        `obj.fn` as a method invocation (and possibly inject a hidden `self`),
+        which CRS intentionally avoids at the core runtime level.
+
+        - The supported, explicit form is:
+            let f = obj.fn;    // extract the value (a function) from the table
+            f(obj);            // call the function, pass obj explicitly if needed
+
+        This keeps call semantics explicit (no implicit `this`/`self` binding)
+        and keeps tables as plain data containers (hash maps) rather than
+        objects with method semantics.
+
+        Optional compiler sugar (design choice)
+        --------------------------------------
+        - It is possible to provide *compiler-level* syntactic sugar that
+        desugars method-style syntax into explicit calls, without changing the
+        VM. Example:
+            obj.method(args...)   --->   method(obj, args...)
+        The compiler can perform this transform before lowering to bytecode.
+        This preserves a strict, simple runtime while giving nicer syntax to
+        users. Whether to include such sugar is a deliberate design decision:
+        - pros: ergonomics for users
+        - cons: adds implicit behavior that can hide the language's strict
+                semantics and the explicit passing of `self`.
+
+        Difference: SYMBOL (member/key) vs VARIABLE (binding)
+        -----------------------------------------------------
+        - VARIABLE:
+            * A name bound in a scope (local, function, global).
+            * Directly addressable and assignable by the VM via an environment
+            slot (e.g. local index or global symbol).
+            * Accepts ++/-- and direct mutation opcodes.
+
+        - SYMBOL / MEMBER / INDEX:
+            * A key lookup into a table or an index into an array.
+            * Evaluated by resolving a chain of lookups at runtime.
+            * Represents a value produced by an expression, not a named binding.
+            * Assignment to a symbol requires an explicit store to the resolved
+            slot (desugared assignment), and therefore operators that need a
+            direct L-value (like ++) are not allowed in the grammar.
+
+        Examples
+        --------
+            // variable (allowed)
+            let x = 1;
+            x++;
+            // becomes an INC_LOCAL bytecode
+
+            // table field (not syntactically allowed for ++)
+            vals.v += 1;          // supported
+            // desugars to:
+            // vals.v = vals.v + 1
+
+            // function in table: explicit extraction required
+            let f = obj.fn;
+            f(arg1, arg2);
+
+            // optional compiler sugar (if enabled by compiler)
+            // obj.method(a)  =>  method(obj, a)
+
+        Tutorial note
+        -------------
+        - This tutorial intentionally keeps the language model simple and
+        explicit. Some features that other languages support (such as
+        calling functions directly from table fields or allowing ++ on
+        complex expressions) are deliberately omitted here.
+
+        The goal is to focus on the core execution model of CRS:
+        variables, symbol lookups, explicit function calls, and predictable
+        bytecode behavior. Keeping these rules strict helps make the
+        language easier to understand for learning purposes and avoids
+        unnecessary runtime complexity.
+
+        Conclusion
+        ----------
+        - CRS treats tables as plain data containers (symbols/keys) and keeps the
+        runtime model minimal and predictable. ++/-- are intentionally
+        restricted to variables; member/index updates use compound assignment
+        which the compiler desugars into explicit read + write operations.
+        - Function calling follows the same philosophy: explicit extraction and
+        explicit passing of context (`self`) keep semantics simple and avoid
+        hidden binding rules in the VM.
+    */
+
+    let increment_func = obj.increment_func;  
+    let getValue_func = obj.getValue_func;
+
+    println("Initial value:", getValue_func(obj));
+    increment_func(obj);
+    println("After increment:", getValue_func(obj));
+}
+
+// MAIN TEST FUNCTION
+func main() {
+    println("========================================");
+    println("CRS COMPREHENSIVE FEATURE TEST SUITE");
+    println("========================================");
+    println();
+    
+    test_printing();
+    println();
+    
+    test_variables();
+    println();
+    
+    test_arithmetic();
+    println();
+    
+    test_comparison();
+    println();
+    
+    test_logical();
+    println();
+    
+    test_if_else();
+    println();
+    
+    test_while_loop();
+    println();
+    
+    test_for_loop();
+    println();
+    
+    test_arrays();
+    println();
+    
+    test_tables();
+    println();
+    
+    test_functions();
+    println();
+    
+    test_recursion();
+    println();
+    
+    test_strings();
+    println();
+    
+    test_try_catch();
+    println();
+    
+    test_multiple_vars();
+    println();
+    
+    test_complex_expr();
+    println();
+    
+    test_type_checking();
+    println();
+    
+    test_nested();
+    println();
+    
+    test_error_conditions();
+    println();
+    
+    test_break_continue();
+    println();
+
+    test_complex_assignment();
+    println();
+
+    test_gc();
+    println();
+
+    test_performance();
+    println();
+
+    test_include_1();
+    println();
+
+    test_include_2();
+    println();
+
+    test_functions_in_tables();
+    println();
+    
+    println("========================================");
+    println("ALL TESTS COMPLETED SUCCESSFULLY!");
+    println("========================================");
+}
