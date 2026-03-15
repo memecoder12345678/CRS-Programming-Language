@@ -45,6 +45,10 @@ This keeps the runtime implementation small and avoids complex lvalue semantics.
 
 ## Language Overview
 
+>
+> **Note**: The CRS language only allows two keywords at the file level: `func` and `include`.
+>
+
 CRS supports common scripting features:
 
 ### Variables
@@ -205,7 +209,7 @@ obj.value = obj.value + 1;
 
 ---
 
-## Error Handling
+### Error Handling
 
 CRS supports `try` / `catch`.
 
@@ -219,7 +223,7 @@ try {
 
 ---
 
-## Modules
+### Modules
 
 CRS supports a simple module system using `include`.
 
