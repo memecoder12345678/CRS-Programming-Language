@@ -916,7 +916,7 @@ The CRS compiler translates scripts into a linear sequence of CDA instructions. 
 
 Consider a simple CRS function:
 
-```js
+```go
 func add(a, b) {
     return a + b;
 }
