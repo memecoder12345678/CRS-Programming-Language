@@ -445,6 +445,11 @@ impl Parser {
                 self.eat(Token::RParen);
                 e
             }
+            Token::Colon => { 
+                self.eat(Token::Colon); 
+                let sym_name = self.parse_ident(); 
+                Expr::Symbol(sym_name) 
+            },
             _ => {
                 panic!(
                     "SyntaxError[Line {}, Col {}]: Unexpected token '{:?}'.",

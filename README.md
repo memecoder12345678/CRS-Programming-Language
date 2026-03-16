@@ -126,7 +126,7 @@ Tables are **data containers**, not objects.
 
 ### Functions
 
-```js
+```go
 func add(a, b) {
     return a + b;
 }
@@ -769,9 +769,174 @@ Float (seconds);
 
 ---
 
+
+## CDA (CRS Debug Assembly)
+
+CRS includes a custom, human-readable bytecode assembly format known as **CDA**. 
+
+The CRS virtual machine is **register-based**. Instead of using a traditional operand stack, it operates on an unbounded set of virtual registers (`r0`, `r1`, `r2`, ...) allocated per function. This maps closely to the language's explicit variable bindings and keeps the execution model predictable.
+
+You can inspect the generated CDA bytecode for any CRS script using the disassembly command:
+
+```bash
+crs dis <file.crs>
+```
+
+---
+
+### Instruction Set
+
+The CRS compiler translates scripts into a linear sequence of CDA instructions. The VM includes a complete set of operations for data movement, arithmetic, control flow, and optimizations like immediate value folding.
+
+---
+
+#### Loading & Copying
+
+| Instruction | Description |
+| :--- | :--- |
+| `mov rD, null` | Loads a `null` value into `rD`. |
+| `mov rD, true/false` | Loads a boolean value into `rD`. |
+| `mov rD, #value` | Loads an immediate integer or float into `rD`. |
+| `mov rD, "string"` | Loads an interned string from the StringPool into `rD`. |
+| `mov rD, :symbol` | Loads an interned symbol into `rD`. |
+| `mov rD, func#id` | Loads a first-class function reference into `rD`. |
+| `mov rD, rS` | Copies the value from register `rS` to `rD`. |
+
+---
+
+#### Data Structures
+
+| Instruction | Description |
+| :--- | :--- |
+| `alloc_arr rD` | Allocates a new empty array into `rD`. |
+| `alloc_tab rD` | Allocates a new empty table into `rD`. |
+| `mov rD,[rO + rK]` | Property/Index access. Reads `rO[rK]` into `rD`. |
+| `mov [rO + rK], rV` | Property/Index assignment. Sets `rO[rK]` to `rV`. |
+
+---
+
+#### Arithmetic Operations
+
+| Instruction | Description |
+| :--- | :--- |
+| `add rD, rA, rB` | Addition (`rD = rA + rB`). |
+| `sub rD, rA, rB` | Subtraction (`rD = rA - rB`). |
+| `mul rD, rA, rB` | Multiplication (`rD = rA * rB`). |
+| `div rD, rA, rB` | Division (`rD = rA / rB`). |
+
+---
+
+
+#### Immediate Arithmetic (Optimized)
+*Used when the right operand is a constant integer.*
+
+| Instruction | Description |
+| :--- | :--- |
+| `add_imm rD, rS, #imm` | Immediate addition (`rD = rS + imm`). |
+| `sub_imm rD, rS, #imm` | Immediate subtraction (`rD = rS - imm`). |
+| `mul_imm rD, rS, #imm` | Immediate multiplication (`rD = rS * imm`). |
+| `div_imm rD, rS, #imm` | Immediate division (`rD = rS / imm`). |
+
+---
+
+
+#### Comparison Operations
+
+| Instruction | Description |
+| :--- | :--- |
+| `cmp_lt rD, rA, rB` | Less than (`rD = rA < rB`). |
+| `cmp_le rD, rA, rB` | Less than or equal (`rD = rA <= rB`). |
+| `cmp_gt rD, rA, rB` | Greater than (`rD = rA > rB`). |
+| `cmp_ge rD, rA, rB` | Greater than or equal (`rD = rA >= rB`). |
+| `cmp_eq rD, rA, rB` | Equality (`rD = rA == rB`). |
+| `cmp_ne rD, rA, rB` | Inequality (`rD = rA != rB`). |
+
+---
+
+
+#### Immediate Comparisons (Optimized)
+*Used when comparing a variable against a constant integer.*
+
+| Instruction | Description |
+| :--- | :--- |
+| `cmp_lt_imm rD, rS, #imm` | Immediate less than (`rD = rS < imm`). |
+| `cmp_le_imm rD, rS, #imm` | Immediate less than or equal (`rD = rS <= imm`). |
+| `cmp_gt_imm rD, rS, #imm` | Immediate greater than (`rD = rS > imm`). |
+| `cmp_ge_imm rD, rS, #imm` | Immediate greater than or equal (`rD = rS >= imm`). |
+| `cmp_eq_imm rD, rS, #imm` | Immediate equality (`rD = rS == imm`). |
+| `cmp_ne_imm rD, rS, #imm` | Immediate inequality (`rD = rS != imm`). |
+
+---
+
+
+#### Unary Operations
+
+| Instruction | Description |
+| :--- | :--- |
+| `not rD, rS` | Logical NOT (`rD = !rS`). |
+| `neg rD, rS` | Mathematical negation (`rD = -rS`). |
+
+---
+
+
+#### Control Flow
+
+| Instruction | Description |
+| :--- | :--- |
+| `jmp 0xTARGET` | Unconditional jump to `TARGET` address. |
+| `jz rS, 0xTARGET` | Jump to `TARGET` if `rS` is falsy (Jump if Zero). |
+| `jnz rS, 0xTARGET` | Jump to `TARGET` if `rS` is truthy (Jump if Not Zero). |
+
+---
+
+
+#### Functions & Calls
+
+| Instruction | Description |
+| :--- | :--- |
+| `call func, rB, #count` | Calls a known static function `func` with `count` arguments starting from base register `rB`. |
+| `callv rF, rB, #count` | Calls a dynamic function stored in register `rF`. |
+| `ncall native, rB, #c` | Calls a native standard library function. |
+| `fncall sys, rD` | Fast-path native call for 1-argument system functions. |
+| `ret rS` | Returns the value in `rS` to the caller. |
+
+---
+
+
+#### Exceptions & Memory
+
+| Instruction | Description |
+| :--- | :--- |
+| `throw rS` | Throws the value in `rS` as an exception. |
+| `gc rD` | Forces garbage collection (mapped to `gc_collect()`). |
+
+---
+
+### Example Disassembly
+
+Consider a simple CRS function:
+
+```js
+func add(a, b) {
+    return a + b;
+}
+```
+
+Running `crs dis` will output how the compiler maps parameters to registers (`r0`, `r1`) and evaluates the expression:
+
+```text
+add:
+  ; registers allocated: 4
+  0x0000    add        r2, r0, r1
+  0x0001    ret        r2
+```
+
+---
+
 ## CLI
 
-The CRS toolchain provides several commands.
+The CRS toolchain provides several commands:
+
 
 ### Run a script
 
@@ -799,7 +964,7 @@ crs check <file.crs>
 
 ## Example
 
-```js
+```go
 func fibonacci(n) {
     if (n <= 1) {
         return n;
