@@ -181,6 +181,7 @@ Variables map directly to storage slots in the VM.
 Table fields are **symbol lookups**, not variables.
 
 ```js
+let sym = :abc;
 obj.value;
 arr[0];
 ```
