@@ -927,7 +927,7 @@ Running `crs dis` will output how the compiler maps parameters to registers (`r0
 
 ```text
 add:
-  ; registers allocated: 4
+  ; registers allocated: 3
   0x0000    add        r2, r0, r1
   0x0001    ret        r2
 ```
@@ -1016,3 +1016,4 @@ CRS intentionally prioritizes **clarity of implementation over language convenie
 ## License
 
 [MIT License](LICENSE)
+
